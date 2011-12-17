@@ -4,8 +4,8 @@ ZombieConfig: class {
 
     options := HashMap<String, String> new()
 
-    init: func ~withDefaults (defaults: HashMap<String, String>, path: String) {
-        defaults each(|k, v| options put(k, v))
+    init: func ~withDefaults (path: String, defaults: Func(Func(String, String))) {
+        defaults(|k, v| options put(k, v))
         init(path)
     }
 

@@ -1,1 +1,5 @@
+.*.swp
 build/
+samples/defaults
+samples/basic
+.libs
