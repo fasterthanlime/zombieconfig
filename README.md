@@ -4,7 +4,6 @@ Dead simple config file parsing for ooc.
 
 ```ooc
 use zombieconfig
-import zombieconfig
 
 main: func {
     config := ZombieConfig new("yourapp.config")
@@ -18,7 +17,6 @@ main: func {
 
 ```ooc
 use zombieconfig
-import zombieconfig
 
 main: func {
 
@@ -30,6 +28,16 @@ main: func {
     launchUI(config["width"] toInt(), config["height"] toInt())
 }
 ```
+
+## Command-line arguments
+
+It's also possible to pass arguments via the command line, like this:
+
+```bash
+./app path=foobar fuuu=barfoo
+```
+
+To do this, call handleCommandLine
 
 ## Config file format
 

@@ -1,2 +1,3 @@
 Name: Zombie simple config system
 SourcePath: source
+Imports: zombieconfig

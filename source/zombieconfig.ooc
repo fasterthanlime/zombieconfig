@@ -1,4 +1,6 @@
-import io/FileReader, text/StringTokenizer, structs/[ArrayList, List, HashMap]
+import io/[File, FileReader]
+import text/StringTokenizer
+import structs/[ArrayList, List, HashMap]
 
 ZombieConfig: class {
 
@@ -10,9 +12,15 @@ ZombieConfig: class {
     }
 
     init: func (path: String) {
-	f := FileReader new(path)
-	while(f hasNext?()) {
-	    line := f readLine() trim()
+        f := File new(path)
+        if (!f exists?()) {
+            "[zombieconfig]: Could not find config file: %s" printfln(path)
+            return
+        }
+
+	fR := FileReader new(f)
+	while(fR hasNext?()) {
+	    line := fR readLine() trim()
 	    if(line startsWith?('#')) continue
 	    if(line empty?()) continue
 
@@ -36,7 +44,6 @@ ZombieConfig: class {
     parseLine: func (line: String) {
         tokens := line split('=')
         if(tokens size != 2) {
-//		"[config] Ignored line: '%s'" printfln(line)
             return
         }
 
