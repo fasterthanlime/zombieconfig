@@ -28,16 +28,32 @@ ZombieConfig: class {
 	}
     }
 
-    /** It's also possible to pass configuration options via
-        the command line. Example:
+    /**
+     *  It's also possible to pass configuration options via
+     *  the command line. Example:
+     *
+     *      ./app --key value --key2 value2
+     *
+     *  To do this, just pass your `args` object to this function.
+     */
+    handleCommandLine: func (args: ArrayList<String>) -> ArrayList<String> {
+        remainingArgs := ArrayList<String> new()
 
-            ./app path=foobar fuuu=barfoo
+        iter := args iterator()
+        iter next() // eat first arg (program name/path)
 
-        To do this, just pass your `args` object to this function.
-    */
-    handleCommandLine: func (args: ArrayList<String>) {
-        for(i in 1..args size)
-            parseLine(args[i])
+        while (iter hasNext?()) {
+            item := iter next() 
+            if (item startsWith?("--")) {
+                key := item[2..-1]
+                value := iter next()
+                options put(key, value)
+            } else {
+                remainingArgs add(item)
+            }
+        }
+
+        remainingArgs
     }
 
     /** Parse a single line like `a=bc` */
